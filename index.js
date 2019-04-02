@@ -1,11 +1,9 @@
 'use strict';
 
-const store = [];
+let store = [];
 
 function fetchDogImages(totalImages) {
-  console.log('totalImages', totalImages);
   if (!totalImages){
-    console.log('here');
     totalImages = 3;
   }
 
@@ -14,13 +12,13 @@ function fetchDogImages(totalImages) {
   fetch(apiUrl)
     .then((response) => response.json())
     .then((jsonData) => {
-      jsonData.message.forEach(img => store.push(img));
-      render();
+      store = [].concat(jsonData.message);
+      render(store);
     })
     .catch((error) => console.log(error));
 }
 
-function render() {
+function render(store) {
   const dogTemplate = store.map(buildDogHtml);
   $('.js-dog-results').html(dogTemplate);
 }
@@ -28,8 +26,8 @@ function render() {
 function fetchDogs() {
   $('form#total-dogs').on('submit', function(event){
     event.preventDefault();
-    event.target.reset();
     const totalImages = $('#number-of-dogs').val();
+    event.target.reset();
     fetchDogImages(totalImages);
   });
 }
