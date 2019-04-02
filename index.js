@@ -25,16 +25,20 @@ function breed(){
   $('.form-breed').on('submit', function(event){
     event.preventDefault();
     let breed = $('.breed-name').val();
+    console.log(breed);
+    if(breed!==''){
     let urlapi= `https://dog.ceo/api/breed/${breed}/images/random`;
     fetch(urlapi).then(res=>res.json()).then(data=>{
       $('.js-dog-results').html(buildDogHtml(data.message));
-    }).catch(error){
-      fetch('https://dog.ceo/api/breed/hound/images/random').then(res=>res.json()).then(data=>{$('.js-dog-results').html(buildDogHtml(data.message));})
-      
-    }
-  })
+    }).catch((error)=>
+      console.log(error)
+  )
+  }else{
+    fetch('https://dog.ceo/api/breed/hound/images/random').then(res=>res.json()).then(data=>{$('.js-dog-results').html(buildDogHtml(data.message));}).catch((error)=>console.log(error));
+  }
+  
 
-}
+})}
 
 function buildDogHtml(image) {
   return `
