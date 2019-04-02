@@ -37,7 +37,6 @@ function breed(){
     event.preventDefault();
     let breed = $('.breed-name').val();
     let urlapi= `https://dog.ceo/api/breed/${breed}/images/random`;
-    let xhr = new XMLHttpRequest();
     try {
       urlapi=`https://dog.ceo/api/breed/hound/images/random`;
       fetch(urlapi).then(res=>res.json()).then(data=>{
@@ -59,5 +58,4 @@ $(function() {
   console.log('App loaded! Waiting for submit!');
   fetchDogs();
   breed();
-  breedlist();
 });
