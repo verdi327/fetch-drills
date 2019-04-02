@@ -1,7 +1,7 @@
 'use strict';
 
-function watchForm() {
-  $('form').on('submit', function(event){
+function fetchtotaldog() {
+  $('.form-num').on('submit', function(event){
     event.preventDefault();
     let apiUrl='';
     const resultTotal = $(this).serialize().split('=')[1];
@@ -21,6 +21,20 @@ function watchForm() {
     
   });
 }
+function breed(){
+  $('.form-breed').on('submit', function(event){
+    event.preventDefault();
+    let breed = $('.breed-name').val();
+    let urlapi= `https://dog.ceo/api/breed/${breed}/images/random`;
+    fetch(urlapi).then(res=>res.json()).then(data=>{
+      $('.js-dog-results').html(buildDogHtml(data.message));
+    }).catch(error){
+      fetch('https://dog.ceo/api/breed/hound/images/random').then(res=>res.json()).then(data=>{$('.js-dog-results').html(buildDogHtml(data.message));})
+      
+    }
+  })
+
+}
 
 function buildDogHtml(image) {
   return `
@@ -30,5 +44,6 @@ function buildDogHtml(image) {
 
 $(function() {
   console.log('App loaded! Waiting for submit!');
-  watchForm();
+  fetchtotaldog();
+  breed();
 });
